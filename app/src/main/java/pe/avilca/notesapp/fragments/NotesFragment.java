@@ -34,7 +34,7 @@ public class NotesFragment extends Fragment {
         notes_list = view.findViewById(R.id.notes_list);
         notes_list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Notes> notes = NotesRepository.findByState("all");
+        List<Notes> notes = NotesRepository.list();
         notes_list.setAdapter(new NotesAdapter(notes));
         return view;
     }

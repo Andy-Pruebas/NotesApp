@@ -4,14 +4,20 @@ import com.orm.dsl.Table;
 @Table
 public class Notes {
 
-    private Long id, userId;
-    private String title, content, state;
+    private Long id;
+    private String title;
+    private String description;
+    private int estado;
+    private Long usuarioId;
 
+    public Notes() {
+    }
 
-    public Notes(String title, String content, Long userId) {
-        this.userId = userId;
+    public Notes(String title, String description, Long usuarioId) {
         this.title = title;
-        this.content = content;
+        this.description = description;
+        this.estado = estado;
+        this.usuarioId = usuarioId;
     }
 
     public Long getId() {
@@ -22,14 +28,6 @@ public class Notes {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -38,19 +36,27 @@ public class Notes {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getDescription() {
+        return description;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getState() {
-        return state;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         login_btn=findViewById(R.id.ingresar);
         register_btn=findViewById(R.id.register);
 
+        LoastUsername();
+
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,5 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void ShowRegister(){
         startActivity(new Intent(this, RegisterActivity.class));
+    }
+    private void LoastUsername(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String usu = sp.getString("user",null);
+        if(usu !=null){
+            user_et.setText(usu);
+            user_et.requestFocus();
+        }
     }
 }

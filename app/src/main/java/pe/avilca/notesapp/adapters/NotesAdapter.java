@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
 import pe.avilca.notesapp.R;
@@ -39,38 +41,47 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
     }
 
+
     @Override
     public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_notes, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notes, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(NotesAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final NotesAdapter.ViewHolder viewHolder, final int position) {
         final Notes note = this.notes.get(position);
         viewHolder.title.setText(note.getTitle());
-        viewHolder.content.setText(note.getContent());
+        viewHolder.content.setText(note.getDescription());
 
-        viewHolder.btn_favorite.setOnClickListener(new View.OnClickListener() {
+        //seteamos como archivado y ocultamos el item
+        viewHolder.btn_archive.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                NotesRepository.updateState("favorite", note.getId());
+            public void onClick(View v) {
+                notes.get(position).setEstado(2);
+                SugarRecord.save(notes.get(position));
+                notes.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+            }
+
+        });
+
+        //seteamos como favorito
+        viewHolder.btn_favorite.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                notes.get(position).setEstado(1);
+                SugarRecord.save(notes.get(position));
             }
         });
 
-        viewHolder.btn_archive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NotesRepository.updateState("archive", note.getId());
-            }
-        });
 
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return this.notes.size();
     }
-
 
 }
